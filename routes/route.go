@@ -15,12 +15,15 @@ func InitRoutes(e *echo.Echo, db *gorm.DB) {
 	// Member routes
 	e.POST("/members/register", memberController.Register)
 	e.POST("/members/login", memberController.Login)
+	e.POST("/members/teetimes", memberController.BookTeeTime)
 
 	// Admin routes
-	// e.GET("/admin/members", adminController.GetAllMembers)
+	e.POST("/admin/members", adminController.Create)
+	e.GET("/admin/members", adminController.ReadAll)
 	e.GET("/admin/members/:id", adminController.Read)
-	// e.PUT("/admin/members/:id", adminController.UpdateMember)
+	e.PUT("/admin/members/:id", adminController.Update)
 	e.DELETE("/admin/members/:id", adminController.Delete)
+	e.GET("/admin/teetimes", adminController.GetTeeTimes)
 
 	// Tee time routes
 	e.GET("/teetimes", teeTimeController.GetAllTeeTimes)

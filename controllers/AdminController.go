@@ -32,6 +32,16 @@ func (ac *AdminController) Create(c echo.Context) error {
 	return c.JSON(http.StatusCreated, member)
 }
 
+// Read all member
+func (ac *AdminController) ReadAll(c echo.Context) error {
+	var members []models.Member
+	if err := ac.db.Find(&members).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, "Failed to get members")
+	}
+
+	return c.JSON(http.StatusOK, members)
+}
+
 // Read a member
 func (ac *AdminController) Read(c echo.Context) error {
 	id := c.Param("id")
