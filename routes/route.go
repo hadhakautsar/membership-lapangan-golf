@@ -2,9 +2,11 @@ package routes
 
 import (
 	"github.com/labstack/echo/v4"
+	mid "github.com/labstack/echo/v4/middleware"
 	"gorm.io/gorm"
 
 	"membership-lapangan-golf/controllers"
+	"membership-lapangan-golf/middleware"
 )
 
 func InitRoutes(e *echo.Echo, db *gorm.DB) {
@@ -15,7 +17,11 @@ func InitRoutes(e *echo.Echo, db *gorm.DB) {
 	// Member routes
 	e.POST("/members/register", memberController.Register)
 	e.POST("/members/login", memberController.Login)
-	e.POST("/members/teetimes", memberController.BookTeeTime)
+
+	// BasicAuth middleware for authentication
+	auth := e.Group("/auth")
+	auth.Use(mid.BasicAuth(middleware.BasicAuthDB))
+	auth.POST("/members/teetimes", memberController.BookTeeTime)
 
 	// Admin routes
 	e.POST("/admin/members", adminController.Create)

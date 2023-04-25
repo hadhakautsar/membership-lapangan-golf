@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -48,14 +47,11 @@ func (mc *MemberController) Login(c echo.Context) error {
 
 // Book a tee time
 func (mc *MemberController) BookTeeTime(c echo.Context) error {
-	memberID := c.Get("user").(models.Member).ID
-	timeStr := c.FormValue("time")
-	time, err := time.Parse("2006-01-02T15:04:05Z", timeStr)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, "Invalid time format")
+	teeTime := new(models.TeeTime)
+	if err := c.Bind(teeTime); err != nil {
+		return c.JSON(http.StatusBadRequest, "Invalid request payload")
 	}
 
-	teeTime := models.TeeTime{MemberID: memberID, Time: time}
 	if err := mc.db.Create(&teeTime).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Failed to book tee time")
 	}
