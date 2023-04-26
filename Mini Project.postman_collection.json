@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"test2\",\r\n  \"email\": \"test2@example.com\",\r\n  \"password\": \"test456\",\r\n  \"handicap\": 12.5,\r\n  \"score\": 0\r\n}",
+							"raw": "{\r\n  \"username\": \"testscore\",\r\n  \"email\": \"testscore@example.com\",\r\n  \"password\": \"score123\",\r\n  \"handicap\": 11.5,\r\n  \"score\": 5\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -56,12 +56,12 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "test1@example.com",
+									"value": "testscore@example.com",
 									"type": "default"
 								},
 								{
 									"key": "password",
-									"value": "test123",
+									"value": "score123",
 									"type": "default"
 								}
 							],
@@ -96,14 +96,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic dGVzdDFAZXhhbXBsZS5jb206dGVzdDEyMw==",
-								"type": "default",
-								"disabled": true
+								"value": "Basic dGVzdDRAZXhhbXBsZS5jb206dGVzdDQ1Ng==",
+								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"memberId\": 4,\r\n  \"time\": \"2017-07-03T12:39:09Z\"\r\n}",
+							"raw": "{\r\n  \"memberId\": 7,\r\n  \"time\": \"2023-04-18T12:39:09Z\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -121,6 +120,132 @@
 								"auth",
 								"members",
 								"teetimes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Member Score",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dGVzdDRAZXhhbXBsZS5jb206dGVzdDQ1Ng==",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/members/score",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"members",
+								"score"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Member Handicap",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "test456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "test4@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dGVzdDRAZXhhbXBsZS5jb206dGVzdDQ1Ng==",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/auth/members/handicap",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"members",
+								"handicap"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Member Rank",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "test123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "test1@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dGVzdDRAZXhhbXBsZS5jb206dGVzdDQ1Ng==",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/auth/members/rank",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"members",
+								"rank"
 							]
 						}
 					},
@@ -162,9 +287,22 @@
 				},
 				{
 					"name": "Admin READ All member",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8080/admin/members",
 							"protocol": "http",
@@ -186,7 +324,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/members/4",
+							"raw": "http://localhost:8080/admin/members/7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -195,7 +333,7 @@
 							"path": [
 								"admin",
 								"members",
-								"4"
+								"7"
 							]
 						}
 					},
@@ -307,28 +445,16 @@
 				},
 				{
 					"name": "READ all Tee Times",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic dGVzdDFAZXhhbXBsZS5jb206dGVzdDEyMw==",
+								"value": "Basic dGVzdDRAZXhhbXBsZS5jb206dGVzdDQ1Ng==",
 								"type": "default",
 								"disabled": true
 							}
 						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:8080/teetimes",
 							"protocol": "http",
@@ -378,7 +504,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/teetimes/17",
+							"raw": "http://localhost:8080/teetimes/24",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -386,14 +512,14 @@
 							"port": "8080",
 							"path": [
 								"teetimes",
-								"17"
+								"24"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GET available Tee Time",
+					"name": "GET Available Tee Time",
 					"request": {
 						"method": "GET",
 						"header": [],

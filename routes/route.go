@@ -22,6 +22,9 @@ func InitRoutes(e *echo.Echo, db *gorm.DB) {
 	auth := e.Group("/auth")
 	auth.Use(mid.BasicAuth(middleware.BasicAuthDB))
 	auth.POST("/members/teetimes", memberController.BookTeeTime)
+	auth.GET("/members/score", memberController.GetScore)
+	auth.GET("/members/handicap", memberController.GetHandicap)
+	auth.GET("/members/rank", memberController.GetRanking)
 
 	// Admin routes
 	e.POST("/admin/members", adminController.Create)

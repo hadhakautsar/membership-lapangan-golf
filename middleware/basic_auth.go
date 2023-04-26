@@ -17,5 +17,6 @@ func BasicAuthDB(email, password string, c echo.Context) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+	c.Set("user", member)
 	return true, nil
 }

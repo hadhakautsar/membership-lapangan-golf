@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2023 at 02:15 PM
+-- Generation Time: Apr 26, 2023 at 10:47 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -43,7 +43,9 @@ CREATE TABLE `members` (
 --
 
 INSERT INTO `members` (`id`, `username`, `email`, `password`, `handicap`, `score`, `created_at`, `updated_at`) VALUES
-(4, 'test1', 'test1@example.com', 'test123', 12.5, 0, '2023-04-25 04:50:02', '2023-04-25 04:50:02');
+(4, 'test1', 'test1@example.com', 'test123', 12.5, 0, '2023-04-25 04:50:02', '2023-04-25 04:50:02'),
+(7, 'test4', 'test4@example.com', 'test456', 10.5, 2, '2023-04-26 05:03:24', '2023-04-26 05:03:24'),
+(8, 'testscore', 'testscore@example.com', 'score123', 11.5, 5, '2023-04-26 07:49:34', '2023-04-26 07:49:34');
 
 -- --------------------------------------------------------
 
@@ -68,7 +70,8 @@ INSERT INTO `tee_times` (`id`, `member_id`, `time`, `created_at`, `updated_at`) 
 (10, 4, '2022-04-03 19:39:09', '2023-04-25 09:25:21', '2023-04-25 09:25:21'),
 (11, 4, '2022-04-03 23:39:09', '2023-04-25 09:28:18', '2023-04-25 09:28:18'),
 (14, 4, '2024-07-03 19:39:09', '2023-04-25 12:08:10', '2023-04-25 12:08:10'),
-(16, 4, '2027-07-03 19:39:09', '2023-04-25 12:12:03', '2023-04-25 12:12:03');
+(16, 4, '2027-07-03 19:39:09', '2023-04-25 12:12:03', '2023-04-25 12:12:03'),
+(20, 7, '2023-04-18 19:39:09', '2023-04-26 05:36:59', '2023-04-26 05:36:59');
 
 --
 -- Indexes for dumped tables
@@ -95,13 +98,13 @@ ALTER TABLE `tee_times`
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tee_times`
 --
 ALTER TABLE `tee_times`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables
