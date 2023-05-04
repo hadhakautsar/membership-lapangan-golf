@@ -52,6 +52,13 @@ func (mc *MemberController) BookTeeTime(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, "Invalid request payload")
 	}
 
+	member := new(models.Member)
+	if err := mc.db.First(member, teeTime.Member).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, "Failed to book tee time")
+	}
+
+	teeTime.Member = *member
+
 	if err := mc.db.Create(&teeTime).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Failed to book tee time")
 	}

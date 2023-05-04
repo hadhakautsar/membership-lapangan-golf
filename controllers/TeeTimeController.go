@@ -35,6 +35,12 @@ func (ttc *TeeTimeController) CreateTeeTime(c echo.Context) error {
 	if err := c.Bind(teeTime); err != nil {
 		return c.JSON(http.StatusBadRequest, "Invalid request payload")
 	}
+	member := new(models.Member)
+	if err := ttc.db.First(member, teeTime.MemberID).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, "Failed to book tee time")
+	}
+
+	teeTime.Member = *member
 
 	if err := ttc.db.Create(&teeTime).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Failed to create tee time")
@@ -87,9 +93,20 @@ func (ttc *TeeTimeController) GetAvailableTeeTimes(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, "Invalid date format")
 	}
 
-	var teeTimes []models.TeeTime
-	if err := ttc.db.Where("time >= ? AND time < ?", date, date.AddDate(0, 0, 1)).Find(&teeTimes).Error; err != nil {
+	var teeTimes []struct {
+		ID       uint      `json:"id"`
+		MemberID uint      `json:"memberId"`
+		Time     time.Time `json:"time"`
+	}
+	if err := ttc.db.Model(&models.TeeTime{}).
+		Select("id, member_id, time").
+		Where("time >= ? AND time < ?", date, date.AddDate(0, 0, 1)).
+		Scan(&teeTimes).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Failed to get tee times")
+	}
+
+	for i := range teeTimes {
+		teeTimes[i].Time = teeTimes[i].Time.UTC().Truncate(24 * time.Hour)
 	}
 
 	return c.JSON(http.StatusOK, teeTimes)
