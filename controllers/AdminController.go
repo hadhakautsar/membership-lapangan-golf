@@ -29,6 +29,8 @@ func (ac *AdminController) Create(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "Failed to create member")
 	}
 
+	member.Password = ""
+
 	return c.JSON(http.StatusCreated, member)
 }
 
@@ -37,6 +39,10 @@ func (ac *AdminController) ReadAll(c echo.Context) error {
 	var members []models.Member
 	if err := ac.db.Find(&members).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Failed to get members")
+	}
+
+	for i := range members {
+		members[i].Password = ""
 	}
 
 	return c.JSON(http.StatusOK, members)
@@ -50,6 +56,8 @@ func (ac *AdminController) Read(c echo.Context) error {
 	if err := ac.db.First(&member, id).Error; err != nil {
 		return c.JSON(http.StatusNotFound, "Member not found")
 	}
+
+	member.Password = ""
 
 	return c.JSON(http.StatusOK, member)
 }
@@ -68,7 +76,6 @@ func (ac *AdminController) Update(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, "Invalid request payload")
 	}
 
-	// Only update the fields that are provided in the request body
 	if newMember.Username != "" {
 		member.Username = newMember.Username
 	}
@@ -88,6 +95,8 @@ func (ac *AdminController) Update(c echo.Context) error {
 	if err := ac.db.Save(&member).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Failed to update member")
 	}
+
+	member.Password = ""
 
 	return c.JSON(http.StatusOK, member)
 }

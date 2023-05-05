@@ -29,6 +29,8 @@ func (mc *MemberController) Register(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "Failed to create member")
 	}
 
+	member.Password = ""
+
 	return c.JSON(http.StatusCreated, member)
 }
 
@@ -42,6 +44,8 @@ func (mc *MemberController) Login(c echo.Context) error {
 		return c.JSON(http.StatusUnauthorized, "Invalid email or password")
 	}
 
+	member.Password = ""
+
 	return c.JSON(http.StatusOK, member)
 }
 
@@ -53,7 +57,7 @@ func (mc *MemberController) BookTeeTime(c echo.Context) error {
 	}
 
 	member := new(models.Member)
-	if err := mc.db.First(member, teeTime.Member).Error; err != nil {
+	if err := mc.db.First(member, teeTime.MemberID).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Failed to book tee time")
 	}
 
@@ -62,6 +66,8 @@ func (mc *MemberController) BookTeeTime(c echo.Context) error {
 	if err := mc.db.Create(&teeTime).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Failed to book tee time")
 	}
+
+	teeTime.Member.Password = ""
 
 	return c.JSON(http.StatusCreated, teeTime)
 }

@@ -26,6 +26,10 @@ func (ttc *TeeTimeController) GetAllTeeTimes(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "Failed to get tee times")
 	}
 
+	for i := range teeTimes {
+		teeTimes[i].Member.Password = ""
+	}
+
 	return c.JSON(http.StatusOK, teeTimes)
 }
 
@@ -45,6 +49,8 @@ func (ttc *TeeTimeController) CreateTeeTime(c echo.Context) error {
 	if err := ttc.db.Create(&teeTime).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Failed to create tee time")
 	}
+
+	teeTime.Member.Password = ""
 
 	return c.JSON(http.StatusCreated, teeTime)
 }
@@ -66,7 +72,17 @@ func (ttc *TeeTimeController) UpdateTeeTime(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "Failed to update tee time")
 	}
 
-	return c.JSON(http.StatusOK, teeTime)
+	response := struct {
+		ID       uint      `json:"id"`
+		MemberID uint      `json:"memberId"`
+		Time     time.Time `json:"time"`
+	}{
+		ID:       teeTime.ID,
+		MemberID: teeTime.MemberID,
+		Time:     teeTime.Time.UTC().Truncate(24 * time.Hour),
+	}
+
+	return c.JSON(http.StatusOK, response)
 }
 
 // Delete a tee time
