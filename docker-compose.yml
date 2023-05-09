@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      #MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: "golf_membership"
+    ports:
+      - "3309:3306"
+
+  app:
+    build: .
+    image: mini-project:latest
+    #restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    #network_mode: host
