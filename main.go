@@ -3,6 +3,7 @@ package main
 import (
 	config "membership-lapangan-golf/configs"
 	"membership-lapangan-golf/routes"
+	"os"
 
 	"github.com/labstack/echo/v4"
 )
@@ -21,5 +22,9 @@ func main() {
 	routes.InitRoutes(e, db)
 
 	// Start server
-	e.Logger.Fatal(e.Start(":8080"))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	e.Logger.Fatal(e.Start("0.0.0.0:" + port))
 }
